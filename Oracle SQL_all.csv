@@ -1,0 +1,12 @@
+﻿제목,날짜,내용
+7/20 Oracle SQL - 기초,2026년 7월 20일,"SQL, alias"
+7/22 Oracle SQL 함수 및 ORDER BY 정리,2026년 7월 22일,"ORDER BY, 함수"
+7/21 Oracle SQL - SELECT/별칭/타입/DUAL/ROWID,2026년 7월 21일,"SELECT, 함수"
+7/21 Oracle SQL - WHERE/LIKE/NULL/집합연산자,2026년 7월 21일,"LIKE, NULL 처리, WHERE, 집합연산자"
+7/23 Oracle SQL-함수 및 그룹 함수 정리/조인,2026년 7월 23일,"GROUP BY, JOIN, 함수"
+7/24 Oracle SQL -JOIN /Sub Query,2026년 7월 24일,"JOIN, SubQuery"
+"7/27 Oracle SQL-SubQuery,DML 데이터조작어",2026년 7월 27일,"DML, SubQuery"
+7/27 Oracle SQL-DML,2026년 7월 27일,DML
+"7/28 Oracle SQL-테이블 관리, 데이터 무결성,제약조건",2026년 7월 28일,"데이터 무결성, 제약조건"
+"7/29 Oracle SQL-인라인 뷰 , 인덱스",2026년 7월 29일,"인덱스, 인라인 뷰"
+7/29 Oracle SQL-사용자 권한 관리(PRIVILEGE) / ROLE / SYNONYM,2026년 7월 29일,"privilege, role, synonym"
