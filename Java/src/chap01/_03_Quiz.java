@@ -6,5 +6,10 @@ public class _03_Quiz {
         System.out.println("만나서 반갑습니다");
         System.out.println("오늘은 날씨가 좋습니다.");
         System.out.println("재미 있습니다");
+        //ctrl d 복사 + 붙여넣기
+        System.out.println("재미 있습니다");
+        System.out.println("재미 있습니다");
+        System.out.println("재미 있습니다");
+        System.out.println("재미 있습니다");
     }
 }
