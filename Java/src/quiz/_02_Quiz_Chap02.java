@@ -1,6 +1,6 @@
 package quiz;
 
-public class _02_Quiz {
+public class _02_Quiz_Chap02 {
     public static void main(String[] args) {
         String subject = "Java Programming";
         String professor = "홍길동";
