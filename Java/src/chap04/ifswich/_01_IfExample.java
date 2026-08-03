@@ -1,4 +1,4 @@
-package chap04;
+package chap04.ifswich;
 
 public class _01_IfExample {
     public static void main(String[] args) {
