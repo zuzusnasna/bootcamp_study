@@ -1,4 +1,4 @@
-package chap05.classpart;
+package chap05.classpart.student;
 
 public class StudentTest {
     public static void main(String[] args) {

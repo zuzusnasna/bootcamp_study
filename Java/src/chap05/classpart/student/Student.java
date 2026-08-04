@@ -1,4 +1,4 @@
-package chap05.classpart; //패키지 선언
+package chap05.classpart.student; //패키지 선언
 
 public class Student { //클래스 선언
     int studentID;                                 //학번
