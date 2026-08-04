@@ -37,6 +37,7 @@ public class MyDate {
                     isValid = false;
                 else
                     this.day = day;
+                break;
             case 2:
                if (( ( year % 4 ==0 &&  year % 100 !=0 ) || year % 400 ==0))
                    isValid = false;
