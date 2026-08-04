@@ -20,4 +20,8 @@ public class Man {
                 (isMarried ? "결혼을 했고 " :  "결혼을 안했고 ")+ "자식이 " + children +
                         " 있습니다.";
     }
+    /*public static void main(String[] args) {
+        Man man1 = new Man(40, "James", true, "셋");
+        System.out.println(man1.manInfo());
+    }*/
 }
