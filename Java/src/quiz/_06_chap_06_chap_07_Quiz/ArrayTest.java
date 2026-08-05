@@ -1,4 +1,4 @@
-package quiz._06_chap_07_Quiz;
+package quiz._06_chap_06_chap_07_Quiz;
 
 public class ArrayTest {
     public static void main(String[] args) {
