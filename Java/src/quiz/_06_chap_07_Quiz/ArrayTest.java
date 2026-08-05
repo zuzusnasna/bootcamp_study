@@ -2,7 +2,7 @@ package quiz._06_chap_07_Quiz;
 
 public class ArrayTest {
     public static void main(String[] args) {
-        //1. 학생 5명의 점구를 저장할수있는 int현 배열 생성,
+        //1. 학생 5명의 점수를 저장할수있는 int현 배열 생성,
         //for문을 이용해 출력
         int[] score = new int[]{80,90,75,100,85};
         for (int i = 0; i < score.length; i++) {
