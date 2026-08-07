@@ -3,30 +3,65 @@ package chap10.sorting;
 public class QuickSort implements Sort{
     @Override
     public void ascending(int[] arr) {
-        for(int i = 0; i < arr.length - 1; i++){
-            for(int j = 0; j < arr.length - 1 - i; j++){
-                if(arr[j] > arr[j+1]){
-                    int temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
-                }
+        quickSort(arr, 0, arr.length - 1);
+        System.out.println("QuickSort ascending");
+    }
+    private void quickSort(int[] arr, int start, int end) {
+        if(start >= end) {
+            return;
+        }
+        int pivot = partition(arr, start, end);
+        quickSort(arr, start, pivot - 1);
+        quickSort(arr, pivot + 1, end);
+    }
+    private int partition(int[] arr, int start, int end) {
+        int pivot = arr[end];
+        int i = start - 1;
+        for(int j = start; j < end; j++) {
+            if(arr[j] < pivot) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
             }
         }
-        System.out.println("QuickSort ascending");
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[end];
+        arr[end] = temp;
+        return i + 1;
     }
 
     @Override
     public void descending(int[] arr) {
-        for(int i = 0; i < arr.length - 1; i++) {
-            for (int j = 0; j < arr.length - 1 - i; j++) {
-                if (arr[j] < arr[j + 1]) {
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                }
+        quickSortDescending(arr, 0, arr.length - 1);
+        System.out.println("QuickSort descending");
+    }
+
+    private void quickSortDescending(int[] arr, int start, int end) {
+        if(start >= end) {
+            return;
+        }
+        int pivot = partitionDescending(arr, start, end);
+        quickSortDescending(arr, start, pivot - 1);
+        quickSortDescending(arr, pivot + 1, end);
+    }
+
+    private int partitionDescending(int[] arr, int start, int end) {
+        int pivot = arr[end];
+        int i = start - 1;
+        for(int j = start; j < end; j++) {
+            // 큰 값을 왼쪽으로
+            if(arr[j] > pivot) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
             }
         }
-        System.out.println("QuickSort descending");
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[end];
+        arr[end] = temp;
+        return i + 1;
     }
 
     @Override
