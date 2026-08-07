@@ -1,0 +1,183 @@
+# 🎮 템플릿 메서드 패턴 (Template Method Pattern)
+
+> **부모 클래스에서 전체 실행 흐름을 정의하고, 자식 클래스에서 세부 동작을 구현하는 디자인 패턴**
+
+---
+
+## 📌 핵심 개념
+
+- 공통적인 실행 순서는 **부모 클래스**에서 관리한다.
+- 변경되는 기능은 **자식 클래스**에서 구현한다.
+- 실행 순서는 `final` 메서드로 보호하여 변경할 수 없다.
+
+---
+
+## 📂 클래스 구조
+
+```text
+Player
+    │
+    ▼
+PlayerLevel (추상 클래스)
+    │
+ ┌──┴───────────────┐
+ ▼                  ▼
+BeginnerLevel   AdvancedLevel
+                     │
+                     ▼
+               SuperLevel
+```
+
+---
+
+## 📖 Player 클래스
+
+### ✔ 역할
+
+플레이어의 현재 레벨을 관리한다.
+
+### ✔ 멤버 변수
+
+```java
+private PlayerLevel level;
+```
+
+현재 플레이어의 레벨 객체를 저장한다.
+
+### ✔ 생성자
+
+```java
+public Player() {
+    level = new BeginnerLevel();
+    level.showLevelMessage();
+}
+```
+
+- 처음 생성되면 BeginnerLevel로 시작
+- 레벨 메시지 출력
+
+### ✔ upgradeLevel()
+
+```java
+public void upgradeLevel(PlayerLevel level){
+    this.level = level;
+    level.showLevelMessage();
+}
+```
+
+레벨을 변경하고 새로운 레벨 메시지를 출력한다.
+
+### ✔ play()
+
+```java
+public void play(int count){
+    level.go(count);
+}
+```
+
+현재 레벨의 `go()` 메서드를 호출한다.
+
+---
+
+## 📖 PlayerLevel (추상 클래스)
+
+### ✔ 추상 메서드
+
+```java
+public abstract void run();
+public abstract void jump();
+public abstract void turn();
+public abstract void showLevelMessage();
+```
+
+각 레벨마다 다르게 구현되는 기능이다.
+
+---
+
+### ✔ 템플릿 메서드
+
+```java
+final public void go(int count){
+    run();
+
+    for(int i=0; i<count; i++){
+        jump();
+    }
+
+    turn();
+}
+```
+
+### 실행 순서
+
+```text
+run()
+   ↓
+jump()
+   ↓
+jump()
+   ↓
+turn()
+```
+
+`final`을 사용하여 실행 순서가 변경되지 않도록 한다.
+
+---
+
+## 📖 레벨별 특징
+
+| Level | Run | Jump | Turn |
+|-------|-----|------|------|
+| Beginner | 천천히 달림 | ❌ | ❌ |
+| Advanced | 빨리 달림 | ⭕ | ❌ |
+| Super | 매우 빠르게 달림 | ⭕ | ⭕ |
+
+---
+
+## 💻 실행 과정
+
+```text
+Player 생성
+      │
+      ▼
+BeginnerLevel
+
+player.play(1)
+      │
+      ▼
+run
+ ↓
+jump
+ ↓
+turn
+
+↓
+
+upgradeLevel()
+
+↓
+
+AdvancedLevel
+
+↓
+
+player.play(2)
+
+↓
+
+SuperLevel
+
+↓
+
+player.play(3)
+```
+
+---
+
+## 💡 핵심 정리
+
+- 추상 클래스는 **공통 인터페이스**를 제공한다.
+- `go()`는 **템플릿 메서드**로 실행 순서를 정의한다.
+- `final`을 사용하여 실행 순서를 변경할 수 없다.
+- 새로운 레벨은 `PlayerLevel`을 상속받아 구현하면 된다.
+- **다형성**을 활용하여 `Player`는 레벨 종류와 관계없이 동일한 방식으로 동작한다.
