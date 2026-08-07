@@ -2,28 +2,34 @@ package chap10.sorting;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class SortTest {
+
     public static void main(String[] args) throws IOException {
-        System.out.println("정렬방식을 선택하시오.");
-        System.out.println("B : BubbleSort");
-        System.out.println("H : HeapSort");
-        System.out.println("Q : QuickSort");
+        Scanner sc = new Scanner(System.in);
 
+        while(true) {
+            System.out.println("====================");
+            System.out.println(" 정렬 프로그램");
+            System.out.println("====================");
+            System.out.println("B : BubbleSort");
+            System.out.println("H : HeapSort");
+            System.out.println("Q : QuickSort");
+            System.out.println("E : 종료");
+            System.out.print("선택 : ");
 
-        while (true)
-        {
+            char ch = sc.next().charAt(0);
             Sort sort = null;
-            int ch = System.in.read();
-
-            if(ch == '\n' || ch == '\r')
-                continue;
-            if (ch == 'B' || ch == 'b')
+            if(ch == 'B' || ch == 'b') {
                 sort = new BubbleSort();
-            else if (ch == 'H' || ch == 'h')
+            }
+            else if(ch == 'H' || ch == 'h') {
                 sort = new HeapSort();
-            else if (ch == 'Q' || ch == 'q')
+            }
+            else if(ch == 'Q' || ch == 'q') {
                 sort = new QuickSort();
+            }
             else if(ch == 'E' || ch == 'e') {
                 System.out.println("프로그램 종료");
                 break;
@@ -32,14 +38,45 @@ public class SortTest {
                 System.out.println("지원되지 않는 기능입니다.");
                 break;
             }
-            int[] arr = {5,3,8,1,2,7,4,10,6,9};
-            sort.ascending(arr);
-            System.out.println("오름차순 결과");
+
+            // 배열 입력
+            System.out.print("배열 크기 입력 : ");
+            int size = sc.nextInt();
+            int[] arr = new int[size];
+            System.out.println("숫자를 입력하세요.");
+            for(int i = 0; i < size; i++) {
+                arr[i] = sc.nextInt();
+            }
+            System.out.println("원본 배열");
             System.out.println(Arrays.toString(arr));
-            sort.descending(arr);
-            System.out.println("내림차순 결과");
+
+            // 방향 선택
+            System.out.println("1. 오름차순");
+            System.out.println("2. 내림차순");
+            System.out.print("선택 : ");
+
+            int direction = sc.nextInt();
+            long start = System.nanoTime();
+            if(direction == 1) {
+                sort.ascending(arr);
+            }
+            else if(direction == 2) {
+                sort.descending(arr);
+            }
+            else {
+                System.out.println("잘못된 선택입니다.");
+                continue;
+            }
+            long end = System.nanoTime();
+
+            System.out.println("정렬 결과");
             System.out.println(Arrays.toString(arr));
+            System.out.println("실행 시간 : "
+                    + (end-start) + "ns");
             sort.description();
+            System.out.println();
         }
+
+        sc.close();
     }
 }
