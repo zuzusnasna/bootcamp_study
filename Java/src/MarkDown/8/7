@@ -1,0 +1,378 @@
+# 🎮 템플릿 메서드 패턴(Template Method Pattern)
+
+## 개념
+
+템플릿 메서드 패턴은 **전체 실행 순서는 부모 클래스에서 정의하고, 세부 동작은 자식 클래스에서 구현하는 디자인 패턴**이다.
+
+* **공통적인 실행 흐름**은 부모 클래스에서 관리한다.
+* **변경되는 동작**은 자식 클래스에서 오버라이딩한다.
+* 실행 순서는 변경되지 않도록 `final` 메서드를 사용한다.
+
+---
+
+# 클래스 구조
+
+```
+Player
+    │
+    ▼
+PlayerLevel (추상 클래스)
+    │
+ ┌──┴───────────────┐
+ ▼                  ▼
+BeginnerLevel   AdvancedLevel
+                     │
+                     ▼
+               SuperLevel
+```
+
+---
+
+# Player 클래스
+
+## 역할
+
+플레이어의 현재 레벨을 관리하는 클래스이다.
+
+### 멤버 변수
+
+```java
+private PlayerLevel level;
+```
+
+* 현재 플레이어의 레벨을 저장
+* 추상 타입(`PlayerLevel`)으로 선언하여 다양한 레벨 객체를 저장할 수 있다.
+* 다형성 활용
+
+---
+
+## 생성자
+
+```java
+public Player() {
+    level = new BeginnerLevel();
+    level.showLevelMessage();
+}
+```
+
+* 처음 생성되면 BeginnerLevel부터 시작한다.
+* 현재 레벨 메시지를 출력한다.
+
+---
+
+## upgradeLevel()
+
+```java
+public void upgradeLevel(PlayerLevel level){
+    this.level = level;
+    level.showLevelMessage();
+}
+```
+
+### 역할
+
+플레이어의 레벨을 변경한다.
+
+예시
+
+```
+Beginner
+↓
+
+Advanced
+↓
+
+Super
+```
+
+새로운 레벨 객체를 저장하고 레벨 변경 메시지를 출력한다.
+
+---
+
+## play()
+
+```java
+public void play(int count){
+    level.go(count);
+}
+```
+
+Player는 직접 달리기나 점프를 하지 않는다.
+
+현재 레벨이 가지고 있는 `go()`를 호출한다.
+
+---
+
+# PlayerLevel (추상 클래스)
+
+## 역할
+
+각 레벨이 반드시 구현해야 하는 기능을 정의한다.
+
+```java
+public abstract void run();
+public abstract void jump();
+public abstract void turn();
+public abstract void showLevelMessage();
+```
+
+자식 클래스는 반드시 구현해야 한다.
+
+---
+
+## 템플릿 메서드
+
+```java
+final public void go(int count) {
+    run();
+
+    for(int i=0; i<count; i++){
+        jump();
+    }
+
+    turn();
+}
+```
+
+### 실행 순서
+
+```
+run()
+
+↓
+
+jump() 여러 번
+
+↓
+
+turn()
+```
+
+이 순서는 절대 바뀌지 않는다.
+
+그래서
+
+```java
+final
+```
+
+을 사용하여 오버라이딩을 막는다.
+
+---
+
+# BeginnerLevel
+
+## 특징
+
+* 천천히 달림
+* 점프 불가
+* 턴 불가
+
+```text
+천천히 달립니다.
+Jump할 줄 모르지롱.
+Turn할 줄 모르지롱.
+```
+
+---
+
+# AdvancedLevel
+
+## 특징
+
+* 빨리 달림
+* 점프 가능
+* 턴 불가
+
+```text
+빨리 달립니다.
+높이 Jump합니다.
+Turn할 줄 모르지롱.
+```
+
+---
+
+# SuperLevel
+
+## 특징
+
+* 매우 빠르게 달림
+* 높은 점프
+* 턴 가능
+
+```text
+엄청 빨리 달립니다.
+아주 높이 Jump합니다.
+한 바퀴 돕니다.
+```
+
+---
+
+# MainBoard 실행 과정
+
+```java
+Player player = new Player();
+```
+
+↓
+
+```
+BeginnerLevel 생성
+```
+
+↓
+
+```java
+player.play(1);
+```
+
+실행
+
+```
+run()
+
+↓
+
+jump() 1번
+
+↓
+
+turn()
+```
+
+---
+
+```java
+player.upgradeLevel(new AdvancedLevel());
+```
+
+↓
+
+현재 레벨이
+
+```
+Beginner
+
+↓
+
+Advanced
+```
+
+로 변경된다.
+
+---
+
+```java
+player.play(2);
+```
+
+실행
+
+```
+run()
+
+↓
+
+jump()
+
+↓
+
+jump()
+
+↓
+
+turn()
+```
+
+---
+
+```java
+player.upgradeLevel(new SuperLevel());
+```
+
+↓
+
+```
+Advanced
+
+↓
+
+Super
+```
+
+---
+
+```java
+player.play(3);
+```
+
+실행
+
+```
+run()
+
+↓
+
+jump()
+
+↓
+
+jump()
+
+↓
+
+jump()
+
+↓
+
+turn()
+```
+
+---
+
+# 실행 결과
+
+```text
+***** 초급자 레벨입니다. *****
+
+천천히 달립니다.
+Jump할 줄 모르지롱.
+Turn할 줄 모르지롱.
+
+***** 중급자 레벨입니다. *****
+
+빨리 달립니다.
+높이 Jump합니다.
+높이 Jump합니다.
+Turn할 줄 모르지롱.
+
+***** 고급자 레벨입니다. *****
+
+엄청 빨리 달립니다.
+아주 높이 Jump합니다.
+아주 높이 Jump합니다.
+아주 높이 Jump합니다.
+한 바퀴 돕니다.
+```
+
+---
+
+# 핵심 정리
+
+| 개념                          | 설명                                                        |
+| --------------------------- | --------------------------------------------------------- |
+| **추상 클래스(PlayerLevel)**     | 레벨별 공통 기능과 실행 순서를 정의                                      |
+| **추상 메서드(run, jump, turn)** | 각 레벨마다 다르게 구현되는 기능                                        |
+| **템플릿 메서드(go)**             | 전체 실행 순서를 정의하는 메서드                                        |
+| **final**                   | 실행 순서가 변경되지 않도록 오버라이딩 방지                                  |
+| **Player**                  | 현재 레벨 객체를 관리하고 실행을 위임                                     |
+| **다형성**                     | `PlayerLevel` 타입으로 Beginner, Advanced, Super를 모두 사용할 수 있음 |
+
+---
+
+# 💡 핵심 포인트
+
+* **Player**는 현재 레벨 객체만 관리하며 실제 동작은 `PlayerLevel`에 위임한다.
+* **PlayerLevel**은 `go()` 메서드에서 **실행 순서(run → jump → turn)**를 고정한 템플릿 메서드 역할을 한다.
+* 각 레벨은 **run(), jump(), turn()**만 다르게 구현하여 같은 흐름 속에서 서로 다른 동작을 수행한다.
+* 새로운 레벨을 추가하려면 `PlayerLevel`을 상속받아 추상 메서드만 구현하면 되므로 **확장에는 열려 있고 기존 코드는 수정하지 않는(OCP)** 구조를 갖는다.
