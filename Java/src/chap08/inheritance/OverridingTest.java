@@ -16,15 +16,10 @@ public class OverridingTest {
         PlatinumCustomer pc = new PlatinumCustomer(10040, "유관순", 3000);
 
         int price = 40000;
-        System.out.println(customerLee.getCustomerName() + "님이 지불해야 하는 금액은 " +
-                customerLee.calcPrice(price) + "원 입니다.");
-        System.out.println(customerKim.getCustomerName() + "님이 지불해야 하는 금액은 " +
-                customerKim.calcPrice(price) + "원 입니다.");
-        System.out.println(vc.getCustomerName() + "님이 지불해야 하는 금액은 " +
-                vc.calcPrice(price) + "원 입니다.");
-        System.out.println(customerKang.getCustomerName() + "님이 지불해야 하는 금액은 " +
-                customerKang.calcPrice(price) + "원 입니다.");
-        System.out.println(pc.getCustomerName() + "님이 지불해야 하는 금액은 " +
-                pc.calcPrice(price) + "원 입니다.");
+        System.out.println(customerLee.getCustomerName() + "님이 지불해야 하는 금액은 " + customerLee.calcPrice(price) + "원 입니다.");
+        System.out.println(customerKim.getCustomerName() + "님이 지불해야 하는 금액은 " + customerKim.calcPrice(price) + "원 입니다.");
+        System.out.println(vc.getCustomerName() + "님이 지불해야 하는 금액은 " + vc.calcPrice(price) + "원 입니다.");
+        System.out.println(customerKang.getCustomerName() + "님이 지불해야 하는 금액은 " + customerKang.calcPrice(price) + "원 입니다.");
+        System.out.println(pc.getCustomerName() + "님이 지불해야 하는 금액은 " + pc.calcPrice(price) + "원 입니다.");
     }
 }
