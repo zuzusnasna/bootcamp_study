@@ -1,5 +1,5 @@
 package chap10.interfaceex;
-//인터페이스 상솓은 implements
+//인터페이스 상속은 implements
 public abstract class Calculator implements Calc{
 
     @Override
