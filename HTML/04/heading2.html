@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 소개 페이지</title>
+    <style>
+        table, th, td {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>상품 구성</h2><!--h2 제목-->
+    <img src="images/salad.jpg" alt="샐러드" width="450">
+    <img src="images/salad.jpg" alt="샐러드" width="50%">
+    <img src="images/salad.jpg" alt="샐러드" width="150%">
+    <dl><!--설명 목록-->
+        <dt><b>선물용 레드향</b></dt>
+        <dd>소과 13~16과</dd>
+        <dd>중과 10~12과</dd>
+        <dt><b>가정용 레드향</b></dt>
+        <dd>소과 15~18과</dd>
+        <dd>중과 10~12과</dd>
+    </dl>
+    <!-- 표 만들기 -->
+    <img src="images/tangerines.jpg" alt="레드향" width="450">
+    <figcaption><b><레드향 사진></b></figcaption>
+    <table>
+        <caption>레드향 상품 구성표 /표 제목</caption>
+        <colgroup>
+            <col style= "background-color: #eee;"> 
+            <col> 
+            <col style= "width :150px;">
+            <col style= "width :150px;">      
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>용도</th><!--th : 1열 제목-->
+                <th>중량</th><!--th : 2열 제목-->
+                <th>갯수</th><!--th : 2열 제목-->
+                <th>가격</th><!--th : 2열 제목-->
+            </tr>
+            <tr>
+                <th rowspan="2">선물용</th><!--th : 1열 제목-->
+                <td>3kg</td><!--th : 1열 제목-->
+                <td>11~16과</td><!--th : 2열 제목-->
+                <td>35000원</td> <!--th : 3열 제목-->
+            </tr>
+            <tr>
+                <td>5kg</td><!--th : 1열 제목-->
+                <td>11~16과</td><!--th : 2열 제목-->
+                <td>35000원</td> <!--th : 3열 제목-->
+            </tr>
+            <tr>
+                <th rowspan = "2">가정용</th>
+                <td>3kg</td><!--th : 1열 제목-->
+                <td>11~16과</td><!--th : 2열 제목-->
+                <td>35000원</td> <!--th : 3열 제목-->
+            </tr>
+            <tr>
+                <td>5kg</td><!--th : 1열 제목-->
+                <td>11~16과</td><!--th : 2열 제목-->
+                <td>35000원</td> <!--th : 3열 제목-->
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
