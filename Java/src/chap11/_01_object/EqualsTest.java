@@ -100,7 +100,7 @@ public class EqualsTest {
 
         System.out.println("studentLee의 hashcode :  " + studentLee.hashCode());
         System.out.println("studentSang의 hashcode :  " + studentSang.hashCode());
-        System.out.println("studentSang의 실제주솟값 :  " + studentSang.hashCode());
-        System.out.println("studentSang의 실제주솟값 :  " + studentSang.hashCode());
+        System.out.println("studentLee의 실제 주솟값 " + System.identityHashCode(studentLee));
+        System.out.println("studentSang의 실제 주솟값 "+ System.identityHashCode(studentSang));
     }
 }
