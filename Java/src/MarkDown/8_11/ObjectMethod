@@ -1,0 +1,423 @@
+# Java Object 클래스
+
+## 1. Object 클래스란?
+
+Java의 모든 클래스는 기본적으로 `Object` 클래스를 상속받는다.
+
+```text
+Object
+ ├── equals()
+ ├── toString()
+ ├── hashCode()
+ └── ...
+```
+
+따라서 별도로 `extends Object`를 작성하지 않아도 `Object` 클래스의 메서드를 사용할 수 있다.
+
+---
+
+# 2. equals()
+
+`equals()`는 **두 객체가 같은지 비교**할 때 사용하는 메서드이다.
+
+하지만 기본적으로 `Object`의 `equals()`는 **두 객체의 참조 주소가 같은지** 비교한다.
+
+## == 와 equals()의 차이
+
+| 비교         | 의미                         |
+| ---------- | -------------------------- |
+| `==`       | 두 객체가 같은 주소를 가리키는지 비교      |
+| `equals()` | 두 객체의 내용이 같은지 비교하도록 재정의 가능 |
+
+> **주의:** `equals()`는 기본적으로 `==`와 같은 방식으로 참조값을 비교한다.
+> 객체의 실제 내용을 비교하려면 `equals()`를 직접 `Override`해야 한다.
+
+---
+
+## 3. equals() 예제
+
+```java
+package chap11._01_object;
+
+class Student {
+    String studentName;
+    int studentID;
+
+    public Student(int studentID, String studentName) {
+        this.studentName = studentName;
+        this.studentID = studentID;
+    }
+
+    @Override
+    public String toString() {
+        return studentID + ", " + studentName;
+    }
+}
+
+public class EqualsTest {
+    public static void main(String[] args) {
+        Student studentLee = new Student(100, "이상원");
+        Student studentLee2 = studentLee;
+        Student studentSang = new Student(100, "이상원");
+
+        if (studentLee == studentLee2)
+            System.out.println("studentLee와 studentLee2는 주소가 같다");
+        else
+            System.out.println("studentLee와 studentLee2는 주소가 다르다");
+
+        if (studentLee.equals(studentLee2))
+            System.out.println("studentLee와 studentLee2는 동일한 사람입니다.");
+        else
+            System.out.println("studentLee와 studentLee2는 다른 사람입니다.");
+
+        System.out.println("------------------------------------------------------------------------------");
+
+        if (studentLee == studentSang)
+            System.out.println("studentLee와 studentSang는 주소가 같다");
+        else
+            System.out.println("studentLee와 studentSang는 주소가 다르다");
+
+        if (studentLee.equals(studentSang))
+            System.out.println("studentLee와 studentSang는 동일한 사람입니다.");
+        else
+            System.out.println("studentLee와 studentSang는 다른 사람입니다.");
+    }
+}
+```
+
+---
+
+## 4. 객체의 참조 관계
+
+다음 코드를 살펴보자.
+
+```java
+Student studentLee = new Student(100, "이상원");
+Student studentLee2 = studentLee;
+Student studentSang = new Student(100, "이상원");
+```
+
+객체 관계는 다음과 같다.
+
+```text
+studentLee ──────┐
+                 ↓
+              [Student]
+              100, 이상원
+                 ↑
+studentLee2 ─────┘
+
+
+studentSang ─────→ [Student]
+                    100, 이상원
+```
+
+### studentLee와 studentLee2
+
+```java
+studentLee2 = studentLee;
+```
+
+`studentLee2`가 `studentLee`와 **같은 객체를 가리킨다.**
+
+따라서:
+
+```java
+studentLee == studentLee2
+```
+
+결과:
+
+```text
+true
+```
+
+그리고:
+
+```java
+studentLee.equals(studentLee2)
+```
+
+역시:
+
+```text
+true
+```
+
+---
+
+### studentLee와 studentSang
+
+```java
+Student studentSang = new Student(100, "이상원");
+```
+
+`new`를 사용했기 때문에 **새로운 객체가 생성된다.**
+
+값은 같지만 서로 다른 객체이다.
+
+```text
+studentLee  → [100, 이상원]
+studentSang → [100, 이상원]
+```
+
+따라서:
+
+```java
+studentLee == studentSang
+```
+
+결과:
+
+```text
+false
+```
+
+하지만 현재 `Student` 클래스에서는 `equals()`를 Override하지 않았기 때문에:
+
+```java
+studentLee.equals(studentSang)
+```
+
+도:
+
+```text
+false
+```
+
+가 된다.
+
+---
+
+# 5. equals()를 내용 비교로 사용하려면?
+
+객체의 내용이 같은지를 비교하려면 `equals()`를 Override해야 한다.
+
+예를 들어 `studentID`와 `studentName`이 같으면 같은 학생으로 판단하도록 만들 수 있다.
+
+```java
+@Override
+public boolean equals(Object obj) {
+    if (this == obj)
+        return true;
+
+    if (!(obj instanceof Student))
+        return false;
+
+    Student student = (Student) obj;
+
+    return studentID == student.studentID
+            && studentName.equals(student.studentName);
+}
+```
+
+이렇게 하면:
+
+```java
+Student studentLee = new Student(100, "이상원");
+Student studentSang = new Student(100, "이상원");
+
+System.out.println(studentLee.equals(studentSang));
+```
+
+결과:
+
+```text
+true
+```
+
+즉,
+
+```text
+==       → 같은 객체인가?
+equals() → 같은 내용인가?
+```
+
+로 사용할 수 있다.
+
+---
+
+# 6. toString()
+
+`toString()`은 **객체의 정보를 문자열로 반환하는 메서드**이다.
+
+`Object` 클래스에 정의되어 있으며, 필요에 따라 Override해서 사용할 수 있다.
+
+## 기본 형태
+
+```java
+@Override
+public String toString() {
+    return "객체 정보";
+}
+```
+
+---
+
+# 7. toString() 예제
+
+```java
+package chap11._01_object;
+
+class Book {
+    int bookNumber;
+    String bookTitle;
+
+    public Book(int bookNumber, String bookTitle) {
+        this.bookNumber = bookNumber;
+        this.bookTitle = bookTitle;
+    }
+
+    @Override
+    public String toString() {
+        return bookTitle + ", " + bookNumber;
+    }
+}
+
+public class ToStringEx {
+    public static void main(String[] args) {
+        Book book1 = new Book(200, "개미");
+
+        System.out.println(book1);
+        System.out.println(book1.toString());
+    }
+}
+```
+
+실행 결과:
+
+```text
+개미, 200
+개미, 200
+```
+
+---
+
+# 8. println()에서 객체를 출력하면?
+
+다음 코드를 보자.
+
+```java
+System.out.println(book1);
+```
+
+객체를 `println()`에 전달하면 내부적으로 객체의 `toString()`을 호출한다.
+
+즉,
+
+```java
+System.out.println(book1);
+```
+
+은 사실상:
+
+```java
+System.out.println(book1.toString());
+```
+
+과 같은 결과를 출력한다.
+
+따라서 `toString()`을 Override하면 객체를 출력할 때 원하는 정보를 쉽게 확인할 수 있다.
+
+---
+
+# 9. toString()을 Override하지 않는다면?
+
+`Object`의 기본 `toString()`이 호출된다.
+
+예를 들어:
+
+```text
+Book@7a81197d
+```
+
+처럼 **클래스 이름과 객체의 해시코드 등이 포함된 형태**로 출력된다.
+
+따라서 객체의 중요한 정보를 출력하고 싶다면 `toString()`을 Override하는 것이 좋다.
+
+---
+
+# 10. @Override
+
+```java
+@Override
+public String toString() {
+    return bookTitle + ", " + bookNumber;
+}
+```
+
+`@Override`는 부모 클래스의 메서드를 **재정의하고 있다는 것을 명시**하는 어노테이션이다.
+
+### 장점
+
+* 메서드 이름을 잘못 작성했을 때 오류를 알려줌
+* 부모 클래스의 메서드를 재정의한다는 의미를 명확하게 전달
+* 코드의 가독성을 높여줌
+
+---
+
+# 11. 핵심 정리
+
+## ==
+
+```java
+studentLee == studentLee2
+```
+
+두 참조 변수가 **같은 객체를 가리키는지** 비교한다.
+
+```text
+같은 객체 → true
+다른 객체 → false
+```
+
+---
+
+## equals()
+
+```java
+studentLee.equals(studentSang)
+```
+
+두 객체가 **논리적으로 같은 객체인지** 비교한다.
+
+단, 기본 `Object.equals()`는 참조값을 비교하므로 **내용 비교가 필요하면 Override해야 한다.**
+
+---
+
+## toString()
+
+```java
+System.out.println(book1);
+```
+
+객체의 정보를 문자열로 표현한다.
+
+`toString()`을 Override하면 원하는 형태로 객체 정보를 출력할 수 있다.
+
+---
+
+# 12. 한눈에 정리
+
+| 메서드          | 역할             | Override               |
+| ------------ | -------------- | ---------------------- |
+| `equals()`   | 객체의 동일성 비교     | 필요에 따라 가능              |
+| `toString()` | 객체 정보를 문자열로 반환 | 필요에 따라 가능              |
+| `hashCode()` | 객체의 해시값 반환     | `equals()` 재정의 시 함께 고려 |
+
+### 기억할 것
+
+```text
+==
+→ 같은 객체인가?
+
+equals()
+→ 논리적으로 같은 객체인가?
+→ 내용 비교를 하려면 Override
+
+toString()
+→ 객체를 문자열로 표현
+→ println(객체)에서도 호출됨
+```
+
+> **Object 클래스는 Java의 모든 클래스가 기본적으로 상속받는 최상위 클래스이다.**

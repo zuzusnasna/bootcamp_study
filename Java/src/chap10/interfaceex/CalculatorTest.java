@@ -5,6 +5,9 @@ public class CalculatorTest {
         int num1 = 10;
         int num2 = 5;
 
+        String str = new String();
+        Object obj = new Object();
+
         Calc calc = new CompleteCalc();
         System.out.println(calc.add(num1, num2));
         System.out.println(calc.substract(num1, num2));
